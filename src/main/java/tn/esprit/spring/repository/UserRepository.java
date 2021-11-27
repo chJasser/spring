@@ -29,6 +29,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	@Query("SELECT c FROM User c WHERE c.role=admin ")
 	List<User> retrieveAdmin();
+
+
 //	@Query(value = "SELECT c FROM Client c WHERE c.dateNaissance BETWEEN '01/01/1995' and '31/12/1995'" ,
 //			nativeQuery = true)
 //	List<Client> retrieveClientsByDateNai();

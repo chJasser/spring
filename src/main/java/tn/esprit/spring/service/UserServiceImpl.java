@@ -30,9 +30,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addClient(User c) {
-		c.setRole(Role.client);
+	//c.setRole(Role.client);
 		return userRepository.save(c);
-		
 	}
 	
 
