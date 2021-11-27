@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.entity.User;
 import tn.esprit.spring.service.UserService;
 
@@ -30,6 +31,7 @@ public class UserRestController {
 	@GetMapping("/retrieve-all-user")
 	@ResponseBody
 	public List<User> listUser() {
+		//Role r = new Role();
 		return userService.retrieveAllClients();
 	}
 

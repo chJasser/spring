@@ -17,7 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.entity.User;
+import tn.esprit.spring.service.RoleServiceImpl;
 import tn.esprit.spring.service.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +29,18 @@ public class ClientServiceImplTest {
 
 	@Autowired
 	UserServiceImpl clientServiceImp;
+	@Autowired
+	RoleServiceImpl roleService;
+
+@Test
+public void testGetUserByRole(){
+List<User> l = this.clientServiceImp.retrieveAllClients();
+assertNotNull(l);
+	for (User temp : l) {
+		System.out.println(temp.getEmail());
+	}
+
+}
 
 //	@Test
 //	public void testAddClient() {

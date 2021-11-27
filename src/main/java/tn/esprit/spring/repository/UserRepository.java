@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import tn.esprit.spring.entity.User;
-import tn.esprit.spring.enume.Role;
+import tn.esprit.spring.entity.Role;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -25,10 +25,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	
 	@Query("SELECT c FROM User c WHERE c.role= :role ")
-	List<User> retrieveClients(@Param("role") Role r);
-	
-	@Query("SELECT c FROM User c WHERE c.role=admin ")
-	List<User> retrieveAdmin();
+	List<User> retrieveUserByRole(@Param("role") Role r);
+
 
 
 //	@Query(value = "SELECT c FROM Client c WHERE c.dateNaissance BETWEEN '01/01/1995' and '31/12/1995'" ,

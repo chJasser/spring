@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import tn.esprit.spring.entity.User;
-import tn.esprit.spring.enume.Role;
+import tn.esprit.spring.entity.Role;
 
 public interface UserService {
 
