@@ -77,7 +77,7 @@ assertNotNull(l);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User c1 = clientServiceImp.addClient(client);
+		User c1 = clientServiceImp.addUser(client);
 		assertNotNull(c1);
 		List<User> listClient = new ArrayList<User>();
 		try {
@@ -89,8 +89,8 @@ assertNotNull(l);
 		}
 		assertTrue(listClient.size()>0);
 
-		clientServiceImp.deleteClient(c1.getIdClient());
-		User c = clientServiceImp.retrieveClient(c1.getIdClient());
+		clientServiceImp.deleteUser(c1.getIdClient());
+		User c = clientServiceImp.retrieveUser(c1.getIdClient());
 		assertNull(c);
 
 	}

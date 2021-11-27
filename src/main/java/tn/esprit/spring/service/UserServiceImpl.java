@@ -22,6 +22,11 @@ public class UserServiceImpl implements UserService {
 	RoleRepository roleRepository;
 
 	@Override
+	public List<User> retrieveAllUsers() {
+		return (List<User>) userRepository.findAll();
+	}
+
+	@Override
 	public List<User> retrieveAllClients() {
 		Role r = roleRepository.getRoleClient();
 		return (List<User>) userRepository.retrieveUserByRole(r);
@@ -34,26 +39,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User addClient(User c) {
+	public User addUser(User c) {
 	//c.setRole(Role.client);
 		return userRepository.save(c);
 	}
 	
 
 	@Override
-	public void deleteClient(Long id) {
+	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
 
 	}
 
 	@Override
-	public User updateClient(User c) {
+	public User updateUser(User c) {
 		
 		return userRepository.save(c);
 	}
 
 	@Override
-	public User retrieveClient(Long id) {
+	public User retrieveUser(Long id) {
 		
 		return userRepository.findById(id).orElse(null);
 	}

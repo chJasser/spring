@@ -12,15 +12,16 @@ public interface UserService {
 
 	
 
-	User addClient(User c);
+	User addUser(User c);
 
-	void deleteClient(Long id);
+	void deleteUser(Long id);
 
-	User updateClient(User c);
+	User updateUser(User c);
 
-	User retrieveClient(Long id);
+	User retrieveUser(Long id);
 	List <User> getClientWithDate(Date d1 ,Date d2);
 
+	List<User> retrieveAllUsers();
 	List<User> retrieveAlladmins();
 	List<User> retrieveAllClients();
 }

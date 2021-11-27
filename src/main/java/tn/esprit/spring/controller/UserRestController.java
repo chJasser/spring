@@ -26,46 +26,61 @@ public class UserRestController {
 
 	@Autowired
 	UserService userService;
-	@ApiOperation(value = "Récupérer la liste des clients")
-	// http://localhost:8089/SpringMVC/client/retrieve-all-clients
+	@ApiOperation(value = "Récupérer la liste des utilisateurs")
+	// http://localhost:8089/SpringMVC/user/retrieve-all-user
 	@GetMapping("/retrieve-all-user")
 	@ResponseBody
 	public List<User> listUser() {
-		//Role r = new Role();
+		return userService.retrieveAllUsers();
+	}
+
+	@ApiOperation(value = "Récupérer la liste des clients")
+	// http://localhost:8089/SpringMVC/user/retrieve-all-client
+	@GetMapping("/retrieve-all-client")
+	@ResponseBody
+	public List<User> listClient() {
 		return userService.retrieveAllClients();
 	}
 
-	// http://localhost:8089/SpringMVC/client/retrieve-client/8
+	@ApiOperation(value = "Récupérer la liste des admins")
+	// http://localhost:8089/SpringMVC/user/retrieve-all-admin
+	@GetMapping("/retrieve-all-admin")
+	@ResponseBody
+	public List<User> listAdmin() {
+		return userService.retrieveAlladmins();
+	}
+
+	// http://localhost:8089/SpringMVC/user/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
 	@ApiOperation(value = "Récupérer client par id")
 	@ResponseBody
 	public User retrieveUser(@PathVariable("user-id") Long clientId) {
-		return userService.retrieveClient(clientId);
+		return userService.retrieveUser(clientId);
 	}
 
-	// http://localhost:8089/SpringMVC/client/add-client
+	// http://localhost:8089/SpringMVC/user/add-user
 	@PostMapping("/add-user")
 	@ApiOperation(value = "ajouter user")
 	@ResponseBody
 	public User addClient(@RequestBody User c) {
-		User client = userService.addClient(c);
+		User client = userService.addUser(c);
 		return client;
 	}
 
-	// http://localhost:8089/SpringMVC/client/remove-client/{client-id}
+	// http://localhost:8089/SpringMVC/user/remove-client/{client-id}
 	@DeleteMapping("/remove-client/{client-id}")
 	@ApiOperation(value = "supprimer client")
 	@ResponseBody
 	public void removeClient(@PathVariable("client-id") Long clientId) {
-		userService.deleteClient(clientId);
+		userService.deleteUser(clientId);
 	}
 
-	// http://localhost:8089/SpringMVC/client/modify-client
+	// http://localhost:8089/SpringMVC/user/modify-client
 	@PutMapping("/modify-client")
 	@ApiOperation(value = "modifier client")
 	@ResponseBody
 	public User modifyClient(@RequestBody User client) {
-		return userService.updateClient(client);
+		return userService.updateUser(client);
 	}
 
 }

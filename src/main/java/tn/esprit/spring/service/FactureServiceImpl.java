@@ -91,7 +91,7 @@ public class FactureServiceImpl implements FactureService {
 		f.setDateFacture(new Date());
 		f.setMontantFacture(montantFacture);
 		f.setMontantRemise(montantRemiseFacture);
-		User c =clientService.retrieveClient(idClient);
+		User c =clientService.retrieveUser(idClient);
 		f.setClient(c);
 		Facture fc=factureRepository.save(f);
 		for(DetailFacture dF:myList) {
