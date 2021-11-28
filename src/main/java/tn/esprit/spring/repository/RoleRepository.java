@@ -5,10 +5,17 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.entity.User;
+import tn.esprit.spring.enume.ERole;
+
+import java.util.Optional;
+
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Integer> {
-    @Query("SELECT r FROM Role r WHERE r.nomRole='admin' ")
+
+    Optional<Role> findByName(ERole name);
+
+    @Query("SELECT r FROM Role r WHERE r.name='admin' ")
     public Role getRoleAdmin();
-    @Query("SELECT r FROM Role r WHERE r.nomRole='client' ")
+    @Query("SELECT r FROM Role r WHERE r.name='client' ")
     public Role getRoleClient();
 }

@@ -22,6 +22,6 @@ public interface UserService {
 	List <User> getClientWithDate(Date d1 ,Date d2);
 
 	List<User> retrieveAllUsers();
-	List<User> retrieveAlladmins();
-	List<User> retrieveAllClients();
+/*	List<User> retrieveAlladmins();
+	List<User> retrieveAllClients();*/
 }

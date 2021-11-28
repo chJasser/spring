@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 		return (List<User>) userRepository.findAll();
 	}
 
-	@Override
+/*	@Override
 	public List<User> retrieveAllClients() {
 		Role r = roleRepository.getRoleClient();
 		return (List<User>) userRepository.retrieveUserByRole(r);
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 		Role r = roleRepository.getRoleAdmin();
 		return (List<User>) userRepository.retrieveUserByRole(r);
 	}
-
+*/
 	@Override
 	public User addUser(User c) {
 	//c.setRole(Role.client);

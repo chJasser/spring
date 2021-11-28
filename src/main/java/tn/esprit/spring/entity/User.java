@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -38,6 +39,8 @@ public class User implements Serializable {
 	String nom;
 
 	String prenom;
+	@Column
+	String username;
 
 	@Temporal(TemporalType.DATE)
 	Date dateNaissance;
@@ -52,16 +55,26 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	Profession profession;
 
-	@OneToOne
-	@JoinColumn(name = "role_id", referencedColumnName = "id")
-	private Role role;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="user_roles",
+	joinColumns = @JoinColumn(name="id_client"),
+	inverseJoinColumns = @JoinColumn(name="id"))
+	private Set<Role> roles = new HashSet<>();
+	//@JoinColumn(name = "role_id", referencedColumnName = "id")
+	//private Role role;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
 	Set<Facture> factureList;
 
 	
-
+	public User(String nom,String prenom,String username,String email,String password){
+		this.nom = nom;
+		this.prenom =prenom ;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {

@@ -2,6 +2,7 @@ package tn.esprit.spring.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +15,11 @@ import tn.esprit.spring.entity.Role;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
+
+	Optional<User> findByUsername(String username);
+	Boolean existsByUsername(String username);
+	Boolean existsByEmail(String email);
+
 	void findByDateNaissanceGreaterThan(Date dateN);
 	
 	
@@ -24,8 +30,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	List<User> retrieveClientsByDateNaissance(@Param("d1") Date d1 , @Param("d2") Date d2);
 	
 	
-	@Query("SELECT c FROM User c WHERE c.role= :role ")
-	List<User> retrieveUserByRole(@Param("role") Role r);
+//	@Query("SELECT c FROM User c WHERE c.role= :role ")
+//	List<User> retrieveUserByRole(@Param("role") Role r);
 
 
 

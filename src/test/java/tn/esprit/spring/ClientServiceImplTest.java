@@ -32,6 +32,7 @@ public class ClientServiceImplTest {
 	@Autowired
 	RoleServiceImpl roleService;
 
+/*
 @Test
 public void testGetUserByRole(){
 List<User> l = this.clientServiceImp.retrieveAllClients();
@@ -41,6 +42,8 @@ assertNotNull(l);
 	}
 
 }
+*/
+
 
 //	@Test
 //	public void testAddClient() {
