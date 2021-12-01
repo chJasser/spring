@@ -62,6 +62,10 @@ public class Produit implements Serializable {
 	@JoinColumn(name = "detailProduitId")
 	DetailProduit detailProduit;
 
+	@OneToOne
+	@JoinColumn(name = "ImageId")
+	ImageModel Image;
+	
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "stockId")
@@ -75,5 +79,6 @@ public class Produit implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	Set<Fournisseur> fournisseur;
+	
 
 }

@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import tn.esprit.spring.entity.DetailProduit;
 import tn.esprit.spring.entity.Fournisseur;
 import tn.esprit.spring.entity.Produit;
 import tn.esprit.spring.entity.Stock;
+import tn.esprit.spring.enume.CategorieProduit;
 import tn.esprit.spring.repository.ProduitRepository;
 
 @Service
@@ -41,8 +43,10 @@ public class ProduitServiceImpl implements ProduitService {
 	@Transactional
 	public Produit addProduit(Produit p, Long idStock, Long idRayon) {
 		// TODO Auto-generated method stub
+		System.out.println(p);
 		p.setRayon(rayonService.retrieveRayon(idRayon));
 		p.setStock(stockService.retrieveStock(idStock));
+		p.setImage(p.getImage());
 		DetailProduit d = detailProduitService.addDetailProduit(p);
 		p.setDetailProduit(d);
 		Produit product=produitRepository.save(p);
@@ -57,8 +61,12 @@ public class ProduitServiceImpl implements ProduitService {
 	}
 
 	@Override
-	public Produit updateProduit(Produit p) {
+	public Produit updateProduit(Produit p,Long idProduit) {
 		// TODO Auto-generated method stub
+		DetailProduit d = detailProduitService.addDetailProduit(p);
+		p.setDetailProduit(d);
+		p.setIdProduit(idProduit);
+		p.getDetailProduit().setDateDerniereModification(new Date());
 		return produitRepository.save(p);
 	}
 
@@ -67,7 +75,7 @@ public class ProduitServiceImpl implements ProduitService {
 		Stock s = stockService.retrieveStock(idStock);
 		Produit p = retrieveProduit(idProduit);
 		p.setStock(s);
-		Produit product=updateProduit(p);
+		Produit product=updateProduit(p,idProduit);
 		stockService.calculStock(idStock);
 		return product;
 	}
@@ -81,7 +89,7 @@ public class ProduitServiceImpl implements ProduitService {
 		Set<Fournisseur> mySet = new HashSet<Fournisseur>();
 		mySet.add(f);
 		p.setFournisseur(mySet);
-		this.updateProduit(p);
+		this.updateProduit(p,produitId);
 
 	}
 
@@ -90,6 +98,58 @@ public class ProduitServiceImpl implements ProduitService {
 		// TODO Auto-generated method stub
 		return this.produitRepository.retrievePrixUnitaitreById(id);
 	}
+
+	
+	@Override
+	public void deleteProduit(Long id) {
+		this.produitRepository.deleteById(id);
+		
+	}
+	
+	@Override
+	public List<Produit> getProduitByLibelle(String libelle) {
+		return this.produitRepository.getProduitBylibelle(libelle);
+		
+	}
+
+	@Override
+	public List<Produit> getProduitBycategory(CategorieProduit category) {
+		// TODO Auto-generated method stub
+		return this.produitRepository.getProduitBycategory(category);
+	}
+
+	@Override
+	public List<Produit> getProduitByprixbetween(float prixUnitaire1) {
+		// TODO Auto-generated method stub
+		return this.produitRepository.getProduitByprixbetween(prixUnitaire1);
+	}
+
+	@Override
+	public List<Produit> getProduitByprixbetween(float prixUnitaire1, float prixUnitaire2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Produit getMax() {
+		// TODO Auto-generated method stub
+		return this.produitRepository.getMax();
+	}
+
+	@Override
+	public Produit getMin() {
+		// TODO Auto-generated method stub
+		return this.produitRepository.getMin();
+	}
+	
+	
+	@Override
+	public List<Produit> getProduitByFiltre(CategorieProduit category,float prix,String libelle) {
+		// TODO Auto-generated method stub
+		return this.produitRepository.getByFiltre(category,prix,libelle);
+	}
+	
+	
 
 	
 
