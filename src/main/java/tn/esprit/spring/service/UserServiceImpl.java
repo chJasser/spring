@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entity.User;
-import tn.esprit.spring.enume.Role;
+import tn.esprit.spring.entity.Role;
+import tn.esprit.spring.repository.RoleRepository;
 import tn.esprit.spring.repository.UserRepository;
 
 @Service
@@ -17,39 +18,47 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	RoleRepository roleRepository;
 
 	@Override
+	public List<User> retrieveAllUsers() {
+		return (List<User>) userRepository.findAll();
+	}
+
+/*	@Override
 	public List<User> retrieveAllClients() {
-		return (List<User>) userRepository.retrieveClients(Role.client);
+		Role r = roleRepository.getRoleClient();
+		return (List<User>) userRepository.retrieveUserByRole(r);
 	}
 	
 	@Override
 	public List<User> retrieveAlladmins() {
-		return (List<User>) userRepository.retrieveAdmin();
+		Role r = roleRepository.getRoleAdmin();
+		return (List<User>) userRepository.retrieveUserByRole(r);
 	}
-
+*/
 	@Override
-	public User addClient(User c) {
-		c.setRole(Role.client);
+	public User addUser(User c) {
+	//c.setRole(Role.client);
 		return userRepository.save(c);
-		
 	}
 	
 
 	@Override
-	public void deleteClient(Long id) {
+	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
 
 	}
 
 	@Override
-	public User updateClient(User c) {
+	public User updateUser(User c) {
 		
 		return userRepository.save(c);
 	}
 
 	@Override
-	public User retrieveClient(Long id) {
+	public User retrieveUser(Long id) {
 		
 		return userRepository.findById(id).orElse(null);
 	}

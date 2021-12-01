@@ -17,7 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.entity.User;
+import tn.esprit.spring.service.RoleServiceImpl;
 import tn.esprit.spring.service.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +29,21 @@ public class ClientServiceImplTest {
 
 	@Autowired
 	UserServiceImpl clientServiceImp;
+	@Autowired
+	RoleServiceImpl roleService;
+
+/*
+@Test
+public void testGetUserByRole(){
+List<User> l = this.clientServiceImp.retrieveAllClients();
+assertNotNull(l);
+	for (User temp : l) {
+		System.out.println(temp.getEmail());
+	}
+
+}
+*/
+
 
 //	@Test
 //	public void testAddClient() {
@@ -63,7 +80,7 @@ public class ClientServiceImplTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User c1 = clientServiceImp.addClient(client);
+		User c1 = clientServiceImp.addUser(client);
 		assertNotNull(c1);
 		List<User> listClient = new ArrayList<User>();
 		try {
@@ -75,8 +92,8 @@ public class ClientServiceImplTest {
 		}
 		assertTrue(listClient.size()>0);
 
-		clientServiceImp.deleteClient(c1.getIdClient());
-		User c = clientServiceImp.retrieveClient(c1.getIdClient());
+		clientServiceImp.deleteUser(c1.getIdClient());
+		User c = clientServiceImp.retrieveUser(c1.getIdClient());
 		assertNull(c);
 
 	}
