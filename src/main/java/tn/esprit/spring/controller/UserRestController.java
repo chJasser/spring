@@ -37,23 +37,6 @@ public class UserRestController {
 		return userService.retrieveAllUsers();
 	}
 
-/*
-@ApiOperation(value = "Récupérer la liste des clients")
-	// http://localhost:8089/SpringMVC/user/retrieve-all-client
-	@GetMapping("/retrieve-all-client")
-	@ResponseBody
-	public List<User> listClient() {
-		return userService.retrieveAllClients();
-	}
-
-	@ApiOperation(value = "Récupérer la liste des admins")
-	// http://localhost:8089/SpringMVC/user/retrieve-all-admin
-	@GetMapping("/retrieve-all-admin")
-	@ResponseBody
-	public List<User> listAdmin() {
-		return userService.retrieveAlladmins();
-	}
-	*/
 
 	// http://localhost:8089/SpringMVC/user/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
