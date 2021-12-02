@@ -1,4 +1,6 @@
 package tn.esprit.spring.payload.response;
+import tn.esprit.spring.entity.User;
+
 import java.util.List;
 public class JwtResponse {
     private String token;
@@ -6,14 +8,24 @@ public class JwtResponse {
     private Long id;
     private String username;
     private String email;
+    private User profile;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, Long id, String username, String email, User profile, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;
+        this.profile = profile ;
         this.roles = roles;
+    }
+
+    public void setProfile(User profile) {
+        this.profile = profile;
+    }
+
+    public User getProfile() {
+        return profile;
     }
 
     public String getAccessToken() {
