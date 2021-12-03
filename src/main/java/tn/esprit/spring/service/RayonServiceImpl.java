@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class RayonServiceImpl implements RayonService {
 	@Override
 	public Rayon addRayon(Rayon r) {
 		// TODO Auto-generated method stub
+		r.setCreatedAt(new Date());
 		return rayonRepository.save(r);
 	}
 
@@ -38,5 +40,13 @@ public class RayonServiceImpl implements RayonService {
 	return (List<Rayon>) rayonRepository.findAll();
 		
 	}
+	
+	@Override
+	public Rayon updateRayon(Rayon r) {
+		// TODO Auto-generated method stub
+		r.setUpdatedAt(new Date());
+		return rayonRepository.save(r);
+	}
+
 
 }

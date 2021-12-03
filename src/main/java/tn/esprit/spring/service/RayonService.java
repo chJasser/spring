@@ -12,4 +12,6 @@ public interface RayonService {
 	void deleteRayon(Long id);
 
 	Rayon retrieveRayon(Long id);
+	
+	Rayon updateRayon(Rayon r);
 }
