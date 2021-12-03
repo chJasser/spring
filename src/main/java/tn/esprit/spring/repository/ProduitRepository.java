@@ -28,12 +28,16 @@ public interface ProduitRepository extends CrudRepository<Produit, Long> {
 	@Query("SELECT  p.prixUnitaire FROM Produit p WHERE p.idProduit = :idP")
 	float retrievePrixUnitaitreById(@Param("idP") Long id);
 	
-	@Query("SELECT  p FROM Produit p WHERE p.libelle = :libelle")
+	@Query("SELECT  p FROM Produit p WHERE p.libelle LIKE %:libelle%")
 	List<Produit> getProduitBylibelle(@Param("libelle") String libelle);
 	
 	
-	@Query("SELECT  p FROM Produit p WHERE p.detailProduit.categorieProduit = :category")
+	@Query("SELECT  p FROM Produit p WHERE p.detailProduit.categorieProduit LIKE %:category%")
 	List<Produit> getProduitBycategory(@Param("category") CategorieProduit category);
+	
+
+	
+	
 	
 	/*
 	@Query("SELECT  p FROM Produit p WHERE p.detailProduit = :category")
