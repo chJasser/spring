@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entity.Stock;
@@ -20,8 +20,8 @@ public class StockServiceImpl implements StockService {
 
 	@Autowired
 	StockRepository stockRepository;
-	
-	@Autowired 
+
+	@Autowired
 	ProduitRepository produitRepository;
 
 	@Override
@@ -33,14 +33,16 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public Stock addStock(Stock s) {
 		// TODO Auto-generated method stub
-
+		s.setCreatedAt(new Date());
 		return stockRepository.save(s);
 	}
 
 	@Override
-	public Stock updateStock(Stock u) {
+	public Stock updateStock(Stock s) {
 		// TODO Auto-generated method stub
-		return stockRepository.save(u);
+		
+		s.setUpdatedAt(new Date());
+		return stockRepository.save(s);
 	}
 
 	@Override
@@ -62,15 +64,28 @@ public class StockServiceImpl implements StockService {
 		List<Stock> stockList;
 		stockList = (List<Stock>) stockRepository.retrieveStock();
 		for (Stock item : stockList) {
-			log.info(item.getLibelleStock() + " en rupture la quantité min est "+item.getQteMin()+" la quant actuelle est "+item.getQte());
+			log.info(item.getLibelleStock() + " en rupture la quantité min est " + item.getQteMin()
+					+ " la quant actuelle est " + item.getQte());
 		}
 	}
 
 	@Transactional
 	public void calculStock(Long idStock) {
-		Stock s=retrieveStock(idStock);
+		Stock s = retrieveStock(idStock);
 		s.setQte(produitRepository.calculStock(idStock));
-		 updateStock(s);
+		updateStock(s);
+	}
+
+	@Override
+	public List<Stock> getStockEnRupture() {
+		// TODO Auto-generated method stub
+		return stockRepository.retrieveStockEnRp();
+	}
+
+	@Override
+	public List<Stock> searchStcokWithLibelle(String str) {
+		// TODO Auto-generated method stub
+		return stockRepository.rechercheStcokWithLibelle(str);
 	}
 
 }

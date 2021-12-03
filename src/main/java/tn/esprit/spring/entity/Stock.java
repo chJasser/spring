@@ -1,6 +1,7 @@
 package tn.esprit.spring.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,7 +45,14 @@ public class Stock implements Serializable {
 
 	String libelleStock;
 	
+	@Temporal(TemporalType.DATE)
+	Date createdAt;
 	
+	@Temporal(TemporalType.DATE)
+	Date updatedAt;
+	
+	boolean checked;
+
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "stock")
 	Set<Produit> produitList;
 

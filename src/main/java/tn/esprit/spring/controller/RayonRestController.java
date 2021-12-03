@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +26,8 @@ import tn.esprit.spring.service.RayonService;
 @RestController
 @RequestMapping("/rayon")
 @Api(tags = "rayon management")
+@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
+		RequestMethod.PUT })
 public class RayonRestController {
 
 	
@@ -31,7 +36,6 @@ public class RayonRestController {
 
 	// http://localhost:8089/SpringMVC/rayon/retrieve-all-rayons
 	@GetMapping("/retrieve-all-rayons")
-	@PreAuthorize("hasRole('ADMIN')")
 	@ApiOperation(value = "Récupérer la liste des rayons")
 	@ResponseBody
 	public List<Rayon> listRayons() {
@@ -63,6 +67,13 @@ public class RayonRestController {
 	@ResponseBody
 	public void removeRayon(@PathVariable("rayon-id") Long rayonId) {
 		rayonService.deleteRayon(rayonId);
+	}
+	
+	@PutMapping("/modify-rayon")
+	@ApiOperation(value = "update rayon")
+	@ResponseBody
+	public Rayon updateRayon(@RequestBody Rayon r) {
+	 return	rayonService.updateRayon(r);
 	}
 	
 }

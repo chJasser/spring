@@ -78,5 +78,17 @@ public class StockRestController {
 	public void calculStock(@PathVariable("stock-id") Long stocktId) {
 		stockService.calculStock(stocktId);
 	}
-
+	@GetMapping("/stock-rupture")
+	@ApiOperation(value = "recuperer stock en rupture")
+	@ResponseBody
+	public List<Stock> retrieveStock() {
+		return stockService.getStockEnRupture();
+	}
+	
+	@GetMapping("/search-stock/{str}")
+	@ApiOperation(value = "search by libelle")
+	@ResponseBody
+	public List<Stock> search(@PathVariable("str") String str) {
+		return stockService.searchStcokWithLibelle(str);
+	}
 }
