@@ -24,6 +24,8 @@ import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.security.jwt.JwtUtils;
 import tn.esprit.spring.security.services.UserDetailsImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -88,9 +90,15 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        User user = null;
+        try {
+            user = new User(signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getUsername(),
+                    signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()) ,
+                    new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getDateNaissance())
+                     );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();

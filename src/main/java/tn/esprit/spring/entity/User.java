@@ -68,12 +68,13 @@ public class User implements Serializable {
 	Set<Facture> factureList;
 
 	
-	public User(String nom,String prenom,String username,String email,String password){
+	public User(String nom,String prenom,String username,String email,String password,Date dateNaissance){
 		this.nom = nom;
 		this.prenom =prenom ;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.dateNaissance = dateNaissance ;
 	}
 
 	@Override

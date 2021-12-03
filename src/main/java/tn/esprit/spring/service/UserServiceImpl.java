@@ -26,18 +26,21 @@ public class UserServiceImpl implements UserService {
 		return (List<User>) userRepository.findAll();
 	}
 
-/*	@Override
-	public List<User> retrieveAllClients() {
-		Role r = roleRepository.getRoleClient();
-		return (List<User>) userRepository.retrieveUserByRole(r);
-	}
-	
 	@Override
-	public List<User> retrieveAlladmins() {
-		Role r = roleRepository.getRoleAdmin();
-		return (List<User>) userRepository.retrieveUserByRole(r);
+	public void assignAdmin(Long id) {
+		Role r = this.roleRepository.getRoleAdmin();
+		System.out.println("role "+ r.getName() + " retrieved ");
+		User u = this.userRepository.getById(id);
+		System.out.println(u.getEmail()+ "retrieved");
+		if (!( u.getRoles().contains(r))) {
+		u.getRoles().add(r); } else { System.out.println("ALREADY ADMIN"); }
+		for(Role t : u.getRoles()){
+			System.out.println("ROLES ARE :");
+			System.out.println(t.getName());
 	}
-*/
+		this.userRepository.saveAndFlush(u);
+	}
+
 	@Override
 	public User addUser(User c) {
 	//c.setRole(Role.client);

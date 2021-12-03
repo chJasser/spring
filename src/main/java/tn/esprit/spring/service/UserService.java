@@ -22,6 +22,8 @@ public interface UserService {
 	List <User> getClientWithDate(Date d1 ,Date d2);
 
 	List<User> retrieveAllUsers();
+
+	void assignAdmin( Long id);
 /*	List<User> retrieveAlladmins();
 	List<User> retrieveAllClients();*/
 }

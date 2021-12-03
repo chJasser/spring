@@ -14,8 +14,8 @@ public interface RoleRepository extends CrudRepository<Role, Integer> {
 
     Optional<Role> findByName(ERole name);
 
-    @Query("SELECT r FROM Role r WHERE r.name='admin' ")
+    @Query("SELECT r FROM Role r WHERE r.name='ROLE_ADMIN' ")
     public Role getRoleAdmin();
-    @Query("SELECT r FROM Role r WHERE r.name='client' ")
+    @Query("SELECT r FROM Role r WHERE r.name='ROLE_USER' ")
     public Role getRoleClient();
 }

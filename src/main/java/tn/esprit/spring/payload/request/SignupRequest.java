@@ -1,5 +1,6 @@
 package tn.esprit.spring.payload.request;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.*;
@@ -12,6 +13,8 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
+
+    private String dateNaissance;
 
     private Set<String> role;
 
@@ -26,6 +29,14 @@ public class SignupRequest {
     @NotBlank
     // @Size(min = 3, max = 20)
     private String prenom;
+
+    public String getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(String dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
 
     public String getNom() {
         return nom;
