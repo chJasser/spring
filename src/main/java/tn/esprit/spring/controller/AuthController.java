@@ -71,6 +71,7 @@ public class AuthController {
                 userDetails.getProfile(),
                 roles));
     }
+    
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
@@ -115,7 +116,7 @@ public class AuthController {
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() ->new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
             });
@@ -125,7 +126,6 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    
     }
-
-	
 }

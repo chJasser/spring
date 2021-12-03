@@ -20,5 +20,9 @@ public interface StockService {
 	
 
 	void calculStock(Long idStock);
+	
+	List<Stock> getStockEnRupture();
+	
+	List <Stock>searchStcokWithLibelle(String str);
 
 }

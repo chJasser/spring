@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,7 +36,6 @@ public class RayonRestController {
 
 	// http://localhost:8089/SpringMVC/rayon/retrieve-all-rayons
 	@GetMapping("/retrieve-all-rayons")
-	@PreAuthorize("hasRole('ADMIN')")
 	@ApiOperation(value = "Récupérer la liste des rayons")
 	@ResponseBody
 	public List<Rayon> listRayons() {
@@ -67,6 +67,13 @@ public class RayonRestController {
 	@ResponseBody
 	public void removeRayon(@PathVariable("rayon-id") Long rayonId) {
 		rayonService.deleteRayon(rayonId);
+	}
+	
+	@PutMapping("/modify-rayon")
+	@ApiOperation(value = "update rayon")
+	@ResponseBody
+	public Rayon updateRayon(@RequestBody Rayon r) {
+	 return	rayonService.updateRayon(r);
 	}
 	
 }
