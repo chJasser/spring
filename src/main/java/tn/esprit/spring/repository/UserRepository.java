@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +17,9 @@ import tn.esprit.spring.entity.Role;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+
+	Page<User> findByEmailContaining(String email,Pageable pageable);
 
 
 	Optional<User> findByUsername(String username);
@@ -30,14 +35,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT c FROM User c WHERE c.dateNaissance BETWEEN :d1 and :d2 ")
 	List<User> retrieveClientsByDateNaissance(@Param("d1") Date d1 , @Param("d2") Date d2);
 	
-	
-//	@Query("SELECT c FROM User c WHERE c.role= :role ")
-//	List<User> retrieveUserByRole(@Param("role") Role r);
 
-
-
-//	@Query(value = "SELECT c FROM Client c WHERE c.dateNaissance BETWEEN '01/01/1995' and '31/12/1995'" ,
-//			nativeQuery = true)
-//	List<Client> retrieveClientsByDateNai();
 
 }

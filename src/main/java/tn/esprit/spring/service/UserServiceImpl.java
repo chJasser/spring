@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entity.User;
@@ -24,6 +26,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> retrieveAllUsers() {
 		return (List<User>) userRepository.findAll();
+	}
+
+	@Override
+	public Page<User> findByEmailContaining(String email, Pageable pageable) {
+		return userRepository.findByEmailContaining(email,pageable);
+	}
+
+	@Override
+	public Page<User> pageAll(Pageable pageable) {
+		return userRepository.findAll(pageable);
 	}
 
 	@Override
