@@ -60,8 +60,6 @@ public class User implements Serializable {
 	joinColumns = @JoinColumn(name="id_client"),
 	inverseJoinColumns = @JoinColumn(name="id"))
 	private Set<Role> roles = new HashSet<>();
-	//@JoinColumn(name = "role_id", referencedColumnName = "id")
-	//private Role role;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "client",cascade = CascadeType.ALL)

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entity.User;
 import tn.esprit.spring.entity.Role;
+import tn.esprit.spring.enume.CategorieClient;
 import tn.esprit.spring.repository.RoleRepository;
 import tn.esprit.spring.repository.UserRepository;
 
@@ -34,23 +35,39 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public Page<User> findByEmailContainingAndCategorieClientContaining(String email, String categorie, Pageable pageable) {
+		CategorieClient	cat = CategorieClient.valueOf(categorie) ;
+		//return userRepository.findByEmailAndCategorie(cat,pageable);
+		return userRepository.findByEmailContainingAndCategorieClientIs(email,cat,pageable);
+	}
+
+	@Override
 	public Page<User> pageAll(Pageable pageable) {
 		return userRepository.findAll(pageable);
 	}
 
 	@Override
-	public void assignAdmin(Long id) {
+	public boolean assignAdmin(Long id) {
 		Role r = this.roleRepository.getRoleAdmin();
-		System.out.println("role "+ r.getName() + " retrieved ");
 		User u = this.userRepository.getById(id);
-		System.out.println(u.getEmail()+ "retrieved");
 		if (!( u.getRoles().contains(r))) {
-		u.getRoles().add(r); } else { System.out.println("ALREADY ADMIN"); }
-		for(Role t : u.getRoles()){
-			System.out.println("ROLES ARE :");
-			System.out.println(t.getName());
-	}
+		u.getRoles().add(r);
 		this.userRepository.saveAndFlush(u);
+		return true ;} else {
+			return false ;
+			}
+
+	}
+	@Override
+	public boolean withholdAdmin(Long id) {
+		Role r = this.roleRepository.getRoleAdmin();
+		User u = this.userRepository.getById(id);
+		if ( u.getRoles().contains(r)) {
+			u.getRoles().remove(r);
+			this.userRepository.saveAndFlush(u);
+			return true ;} else
+			{ return false; }
+
 	}
 
 	@Override

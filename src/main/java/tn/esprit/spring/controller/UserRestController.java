@@ -42,6 +42,7 @@ public class UserRestController {
 	@GetMapping("/paginate/users")
 	public ResponseEntity<Map<String, Object>> getAllTutorials(
 			@RequestParam(required = false) String email,
+			@RequestParam(required = false) String categorie,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "3") int size
 	) {
@@ -51,23 +52,31 @@ public class UserRestController {
 			Pageable paging = PageRequest.of(page, size);
 
 			Page<User> pageTuts;
-			if (email == null)
+			if (email == null && categorie == null ) {
 				pageTuts = userService.pageAll(paging);
-			else
+			} else if (categorie == null) {
 				pageTuts = userService.findByEmailContaining(email, paging);
+			} else  if (email == null) {
+				pageTuts = userService.findByEmailContainingAndCategorieClientContaining("", categorie, paging);
+				System.out.println("Called find by cat");
+				} else {
+				pageTuts = userService.findByEmailContainingAndCategorieClientContaining(email, categorie, paging);
+				System.out.println("Called find by email and cat");
+			}
 
-			users = pageTuts.getContent();
+				users = pageTuts.getContent();
 
-			Map<String, Object> response = new HashMap<>();
-			response.put("users", users);
-			response.put("currentPage", pageTuts.getNumber());
-			response.put("totalItems", pageTuts.getTotalElements());
-			response.put("totalPages", pageTuts.getTotalPages());
+				Map<String, Object> response = new HashMap<>();
+				response.put("users", users);
+				response.put("currentPage", pageTuts.getNumber());
+				response.put("totalItems", pageTuts.getTotalElements());
+				response.put("totalPages", pageTuts.getTotalPages());
 
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} catch(Exception e){
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
 	}
 
 
@@ -109,11 +118,31 @@ public class UserRestController {
 	}
 
 	@PutMapping("/assign-admin")
-	//@ApiOperation(value = "assigner admin")
 	@PreAuthorize("hasRole('ADMIN')")
-	//@ResponseBody
-	public void assignAdmin(@RequestBody String id) {
-		System.out.println("TRIGGERED WITH "+id);
-		 userService.assignAdmin(Long.valueOf(id));
+	public ResponseEntity<String> assignAdmin(@RequestBody String id) {
+		if (  userService.assignAdmin(Long.valueOf(id)) ) {
+			return new ResponseEntity<>(
+					"ASSIGNED ",
+					HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(
+					"ALREADY ADMIN",
+					HttpStatus.BAD_REQUEST);
+		}
 	}
+	@PutMapping("/withhold-admin")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<String> withholdAdmin(@RequestBody String id) {
+	if ( 	userService.withholdAdmin(Long.valueOf(id)) ) {
+		return new ResponseEntity<>(
+				"DELETED FROM ADMIN ",
+				HttpStatus.OK);
+	} else {
+		return new ResponseEntity<>(
+				"ALREADY SIMPLE USER",
+				HttpStatus.BAD_REQUEST);
+	}
+	}
+
+
 }

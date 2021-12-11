@@ -14,20 +14,18 @@ import org.springframework.stereotype.Repository;
 
 import tn.esprit.spring.entity.User;
 import tn.esprit.spring.entity.Role;
+import tn.esprit.spring.enume.CategorieClient;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-
+	Page<User> findByEmailContainingAndCategorieClientIs(String email,CategorieClient categorie,Pageable pageable);
 	Page<User> findByEmailContaining(String email,Pageable pageable);
-
-
 	Optional<User> findByUsername(String username);
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);
-
 	void findByDateNaissanceGreaterThan(Date dateN);
-	
+
 	
 //	Faites une requête permettant de sélectionner tous les clients nés entre
 //	01/01/1995 et 31/12/1995 en SQL.
