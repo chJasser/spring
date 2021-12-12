@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entity.Facture;
 import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.entity.User;
+import tn.esprit.spring.enume.CategorieClient;
 import tn.esprit.spring.service.UserService;
 
 @Api(tags = "User management")
@@ -35,6 +37,23 @@ public class UserRestController {
 	@ResponseBody
 	public List<User> listUser() {
 		return userService.retrieveAllUsers();
+	}
+
+
+	@GetMapping("/getHistorique/{user-id}")
+	@ApiOperation(value = "Récupérer historique client")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@ResponseBody
+	public List<Facture> HistoriqueAchat(@PathVariable("user-id") Long userId) {
+		return userService.getHistoriqueAchat(userId);
+	}
+
+	@GetMapping("/getNotesByCategorieClient/")
+	@ApiOperation(value = "Récupérer historique client")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@ResponseBody
+	public Map<CategorieClient,Long> getNotesByCategorieClient() {
+		return userService.getNotesByCategorieClient();
 	}
 
 	@ApiOperation(value = "Pagination des utilisateurs")
@@ -111,7 +130,7 @@ public class UserRestController {
 
 	@PutMapping("/modify-client")
 	@ApiOperation(value = "modifier client")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@ResponseBody
 	public User modifyClient(@RequestBody User client) {
 		return userService.updateUser(client);

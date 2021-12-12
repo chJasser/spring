@@ -26,10 +26,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByEmail(String email);
 	void findByDateNaissanceGreaterThan(Date dateN);
 
-	
+
+	//Statistique interactions
+	@Query(value="SELECT COUNT(f.Note),f.client.categorieClient FROM Note f GROUP BY f.client.categorieClient")
+	List <Object[]> getNotesByCategorieClient();
+
+
 //	Faites une requête permettant de sélectionner tous les clients nés entre
 //	01/01/1995 et 31/12/1995 en SQL.
-	
 	@Query("SELECT c FROM User c WHERE c.dateNaissance BETWEEN :d1 and :d2 ")
 	List<User> retrieveClientsByDateNaissance(@Param("d1") Date d1 , @Param("d2") Date d2);
 	

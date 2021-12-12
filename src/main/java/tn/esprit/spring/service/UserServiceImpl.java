@@ -3,16 +3,20 @@ package tn.esprit.spring.service;
 
 import java.util.Date;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entity.Facture;
 import tn.esprit.spring.entity.User;
 import tn.esprit.spring.entity.Role;
 import tn.esprit.spring.enume.CategorieClient;
+import tn.esprit.spring.repository.FactureRepository;
 import tn.esprit.spring.repository.RoleRepository;
 import tn.esprit.spring.repository.UserRepository;
 
@@ -23,6 +27,10 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired
+	FactureRepository factureRepository;
+
+
 
 	@Override
 	public List<User> retrieveAllUsers() {
@@ -44,6 +52,27 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page<User> pageAll(Pageable pageable) {
 		return userRepository.findAll(pageable);
+	}
+
+	@Override
+	public List<Facture> getHistoriqueAchat(Long userId) {
+		User user = this.userRepository.getById(userId);
+		return this.factureRepository.getFactureByClientOrderByDateFactureDesc(user);
+	}
+
+	@Override
+	public Map<CategorieClient,Long> getNotesByCategorieClient() {
+		List<Object[]> result = this.userRepository.getNotesByCategorieClient();
+		System.out.println(result.get(0));
+		Map<CategorieClient,Long> map = null;
+
+		if(result != null && !result.isEmpty()){
+			map = new HashMap<CategorieClient,Long>();
+			for (Object[] object : result) {
+				map.put((CategorieClient) object[1], (Long) object[0]);
+			}
+		}
+		return map;
 	}
 
 	@Override
