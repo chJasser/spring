@@ -1,5 +1,8 @@
 package tn.esprit.spring.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entity.Produit;
+import tn.esprit.spring.entity.SearchProduit;
 import tn.esprit.spring.enume.CategorieProduit;
 import tn.esprit.spring.service.ProduitService;
 
@@ -70,6 +74,21 @@ public class ProduitRestController {
 	public Produit assignProduitToStock(@PathVariable("produit-id") Long produitId,
 			@PathVariable("stock-id") Long stockId) {
 		return produitService.assignProduitToStock(produitId, stockId);
+	}
+	
+	@PutMapping("/assignProduitToRayon/{produit-id}/{rayon-id}")
+	@ApiOperation(value = "assign Produit To Stock")
+	@ResponseBody
+	public Produit assignProduitToRayon(@PathVariable("produit-id") Long produitId,
+			@PathVariable("rayon-id") Long rayonId) {
+		return produitService.assignProduitToRayon(produitId, rayonId);
+	}
+	
+	@PutMapping("/assignProduitToImage/{id}/{produit-id}")
+	@ApiOperation(value = "assign Produit To image")
+	@ResponseBody
+	public Produit AssignImageToproduct(@PathVariable("id") Long ImageId,@PathVariable("produit-id") Long produitId) {
+		return produitService.AssignImageToproduct(ImageId,produitId);
 	}
 
 	@ApiOperation("assing provider to product")
@@ -124,5 +143,39 @@ public class ProduitRestController {
 		
 		return produitService.getMin();
 	}
+	
+	
+	@GetMapping("/get-produit-plus-vendu/{start-date}/{end-date}")
+	@ApiOperation("get quantite")
+	@ResponseBody
+	public Produit getProduitPlusVendu(@PathVariable("start-date") String startDate,@PathVariable("end-date") String endDate) throws ParseException {
+		return produitService.getProduitPlusVendu(startDate,endDate);
+		
+		
+	}
+	
+	
+	@GetMapping("/get-idProduits")
+	@ResponseBody
+	public List<Long> GetIdProduit() {
+		
+		List<Long> a =produitService.GetIdProduit();
+		System.out.print(a);
+		return produitService.GetIdProduit();
+	}
+	
+	@PostMapping(value= {"/search-produit"})
+	@ApiOperation(value = "search multi criteres")
+	@ResponseBody
+	public List<Produit> search(@RequestBody SearchProduit obj){
+	
+		System.out.print(obj.getQuery());
+		System.out.print(obj.getDateDebut());
+		System.out.print(obj.getDateFin());
+	return produitService.rechercheProduitAvance(obj);
+		
+	}
+	
+	
 	
 }

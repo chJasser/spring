@@ -4,7 +4,9 @@ package tn.esprit.spring.repository;
 
 
 
+import java.util.Date;
 import java.util.List;
+
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -38,6 +40,9 @@ public interface ProduitRepository extends CrudRepository<Produit, Long> {
 
 	
 	
+	@Query("SELECT p FROM Produit p WHERE (:str is null or p.libelle LIKE %:str% ) and  ((:date1 is null or p.detailProduit.dateCreation =:date1) "
+			+ "or ( p.detailProduit.dateCreation BETWEEN :date1 and :date2)) and(:prixUintaire is null or p.prixUnitaire <= :prixUintaire)")
+	List<Produit> rechercheProduitAvance(@Param("str") String str , @Param("date1") Date d1,@Param("date2") Date d2,@Param("prixUintaire") float prixUintaire);
 	
 	/*
 	@Query("SELECT  p FROM Produit p WHERE p.detailProduit = :category")
@@ -58,4 +63,12 @@ public interface ProduitRepository extends CrudRepository<Produit, Long> {
 	
 	@Query("SELECT  p FROM Produit p WHERE p.prixUnitaire<= :prixUnitaire1 and  p.detailProduit.categorieProduit = :category and p.libelle = :libelle")
 	List<Produit> getByFiltre(@Param("category") CategorieProduit category,@Param("prix") float prix, @Param("libelle")String libelle);
+	
+	
+
+	
+	
+	
+	
+	
 }
