@@ -54,6 +54,7 @@ public class Produit implements Serializable {
 
 	float prixUnitaire;
 
+	double NoteMoyenne;
 	@OneToMany(mappedBy = "produit" ,cascade = CascadeType.ALL)
 	@JsonIgnore
 	Set<DetailFacture> detailFactureList;

@@ -1,14 +1,25 @@
 package tn.esprit.spring.entity;
 
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "image_table")
 public class ImageModel {
 
-	public ImageModel() {
-		super();
-	}
 
 	public ImageModel(String name, String type, byte[] picByte) {
 		this.name = name;
@@ -32,6 +43,7 @@ public class ImageModel {
 	@Column(name = "picByte", length = 1000)
 	private byte[] picByte;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "Image")
 	Produit produit;	
 

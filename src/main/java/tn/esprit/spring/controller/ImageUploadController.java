@@ -2,6 +2,7 @@ package tn.esprit.spring.controller;
 
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import tn.esprit.spring.entity.ImageModel;
+import tn.esprit.spring.entity.Produit;
 import tn.esprit.spring.repository.ImageRepository;
+import tn.esprit.spring.repository.ProduitRepository;
+import tn.esprit.spring.service.ProduitService;
 
 
 @RestController
@@ -34,23 +39,31 @@ public class ImageUploadController {
 
 	@Autowired
 	ImageRepository imageRepository;
+	
+	@Autowired
+	ProduitService ps;
+
 
 	@PostMapping("/upload")
-	public ImageModel uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	public Long uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
 
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
 		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
 				compressBytes(file.getBytes()));
 		imageRepository.save(img);
-		return img;
+		return img.getId();
 	}
 
-	@GetMapping(path = { "/get/{imageName}" })
-	public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
-
-		final Optional<ImageModel> retrievedImage = imageRepository.findByName(imageName);
-		ImageModel img = new ImageModel(retrievedImage.get().getName(), retrievedImage.get().getType(),
-				decompressBytes(retrievedImage.get().getPicByte()));
+	@GetMapping(path = { "/get/{idProduit}" })
+	//@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@PreAuthorize("permitAll()")
+	public ImageModel getImage(@PathVariable("idProduit") Long idProduit) throws IOException {
+Produit p=ps.retrieveProduit(idProduit);
+ImageModel im=p.getImage();
+	//	final Optional<ImageModel> retrievedImage = imageRepository.findByName(imageName);
+		ImageModel img = new ImageModel(im.getId(),im.getName(),im.getType(),
+				decompressBytes(im.getPicByte()),p);
 		return img;
 	}
 

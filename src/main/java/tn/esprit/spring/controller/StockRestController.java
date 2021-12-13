@@ -78,6 +78,7 @@ public class StockRestController {
 	public void calculStock(@PathVariable("stock-id") Long stocktId) {
 		stockService.calculStock(stocktId);
 	}
+	
 	@GetMapping("/stock-rupture")
 	@ApiOperation(value = "recuperer stock en rupture")
 	@ResponseBody

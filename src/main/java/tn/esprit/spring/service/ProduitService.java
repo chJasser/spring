@@ -1,10 +1,14 @@
 package tn.esprit.spring.service;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
 import tn.esprit.spring.entity.Produit;
+import tn.esprit.spring.entity.SearchProduit;
+import tn.esprit.spring.entity.Stock;
 import tn.esprit.spring.enume.CategorieProduit;
 
 public interface ProduitService {
@@ -21,7 +25,7 @@ public interface ProduitService {
 	void assignFournisseurToProduit(Long fournisseurId, Long produitId);
 
 	float getPrixUnitaitreById(Long id);
-
+	public Produit AssignImageToproduct(Long idImage,Long idProduit);
 	void deleteProduit(Long id);
 
 List<Produit> getProduitByLibelle(String libelle);
@@ -34,6 +38,14 @@ Produit getMax();
 Produit getMin();
 
 List<Produit> getProduitByFiltre(CategorieProduit category, float prix, String libelle);
+
+Produit assignProduitToRayon(Long idProduit, Long idRayon);
+
+Produit getProduitPlusVendu(String startDate, String endDate) throws ParseException;
+
+List<Long> GetIdProduit();
+
+List<Produit> rechercheProduitAvance(SearchProduit obj);
 
 
 }
