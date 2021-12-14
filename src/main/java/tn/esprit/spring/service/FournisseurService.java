@@ -7,4 +7,14 @@ public interface FournisseurService {
 	Fournisseur addFournisseur(Fournisseur fournisseur);
 
 	Fournisseur retriveFournisseur(Long id);
+
+List<Fournisseur> retrieveAllFournisseurs();
+	
+	void deleteFournisseur(Long id);
+
+	Fournisseur updateFournisseur(Fournisseur f);
+
+	
+	 List<Entrepot> getEntrepotsFournisseurs(Fournisseur f);
+
 }
