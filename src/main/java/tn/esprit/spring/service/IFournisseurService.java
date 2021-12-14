@@ -1,9 +1,10 @@
-package tn.esprit.spring.services;
+package tn.esprit.spring.service;
 
 import java.util.List;
 
-import tn.esprit.spring.entities.Entrepot;
-import tn.esprit.spring.entities.Fournisseur;
+import tn.esprit.spring.entity.Entrepot;
+import tn.esprit.spring.entity.Fournisseur;
+
 
 public interface IFournisseurService {
 	

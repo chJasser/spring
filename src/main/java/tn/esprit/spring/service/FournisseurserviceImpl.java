@@ -1,19 +1,26 @@
 package tn.esprit.spring.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entity.Entrepot;
 import tn.esprit.spring.entity.Fournisseur;
+import tn.esprit.spring.repository.EntrepotRepository;
 import tn.esprit.spring.repository.FournisseurRepository;
 
 @Service
 public class FournisseurserviceImpl implements FournisseurService {
+	@Autowired 
+    EntrepotRepository entrepotrepository ;   
 
 	@Autowired
 	FournisseurRepository fournisseurRepo;
-
+	@Autowired
+	FournisseurRepository fournisseurrepository;
 	@Transactional
 	public Fournisseur addFournisseur(Fournisseur fournisseur) {
 		// TODO Auto-generated method stub
@@ -26,9 +33,11 @@ public class FournisseurserviceImpl implements FournisseurService {
 		return this.fournisseurRepo.findById(id).orElse(null);
 	}
 
-@Autowired 
-    EntrepotRepository entrepotrepository ;   
-
+	@Override
+	public Fournisseur retrieveFournisseur(Long id) {
+		// TODO Auto-generated method stub
+		return this.fournisseurRepo.findById(id).orElse(null);
+	}
 @Override
 public List<Fournisseur> retrieveAllFournisseurs() {
 	// TODO Auto-generated method stub

@@ -8,8 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import tn.esprit.spring.entities.Entrepot;
-import tn.esprit.spring.entities.Fournisseur;
+import tn.esprit.spring.entity.Entrepot;
+import tn.esprit.spring.entity.Fournisseur;
 
 
 @Repository
