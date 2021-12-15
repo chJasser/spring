@@ -1,5 +1,8 @@
 package tn.esprit.spring.controller;
 
+
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entity.Stock;
+
+import tn.esprit.spring.entity.searchStock;
 import tn.esprit.spring.service.StockService;
 
 @RestController
@@ -72,12 +77,14 @@ public class StockRestController {
 		stockService.deleteStock(stocktId);
 	}
 
-	@GetMapping("/calcul-stock/{stock-id}")
+
+	@PutMapping("/calcul-stock/{stock-id}")
 	@ApiOperation(value = "calcul stock")
 	@ResponseBody
 	public void calculStock(@PathVariable("stock-id") Long stocktId) {
 		stockService.calculStock(stocktId);
 	}
+
 	
 	@GetMapping("/stock-rupture")
 	@ApiOperation(value = "recuperer stock en rupture")
@@ -92,4 +99,80 @@ public class StockRestController {
 	public List<Stock> search(@PathVariable("str") String str) {
 		return stockService.searchStcokWithLibelle(str);
 	}
+
+
+
+
+	
+	@PostMapping(value= {"/search-stock"})
+	@ApiOperation(value = "search multi")
+	@ResponseBody
+	public List<Stock> search(@RequestBody searchStock obj) {
+	
+	return stockService.rechercheStcokAvance(obj);
+		
+	}
+	
+	@GetMapping("/stock-createdAt-Desc")
+	@ApiOperation(value = "trie par date creation desc")
+	@ResponseBody
+	public List<Stock> getStockOrderByCreatedAtDesc() { 
+		return stockService.getStockLsitOrderByCreatedAtDesc();
+	}
+
+	@GetMapping("/stock-createdAt-Asc")
+	@ApiOperation(value = "trie par date creation asc")
+	@ResponseBody
+	public List<Stock> getStockOrderByCreatedAtAsc() { 
+		return stockService.getStockLsitOrderByCreatedAtAsc();
+	}
+	@GetMapping("/stock-uapdatedAt-Desc")
+	@ApiOperation(value = "trie par date modification desc")
+	@ResponseBody
+	public List<Stock> getStockOrderByUpdatedAtDesc() { 
+		return stockService.getStockLsitOrderByUpdatedAtDesc();
+	}
+
+	@GetMapping("/stock-uapdatedAt-Asc")
+	@ApiOperation(value = "trie par date modification asc")
+	@ResponseBody
+	public List<Stock> getStockOrderByUpdatedAtAsc() { 
+		return stockService.getStockLsitOrderByUpdatedAtAsc();
+	}
+	@GetMapping("/stock-qte-Desc")
+	@ApiOperation(value = "trie par qte desc")
+	@ResponseBody
+	public List<Stock> getStockOrderByQteDesc() { 
+		return stockService.getStockLsitOrderByQteDesc();
+	}
+
+	@GetMapping("/stock-qte-Asc")
+	@ApiOperation(value = "trie par qte asc")
+	@ResponseBody
+	public List<Stock> getStockOrderByQteAsc() { 
+		return stockService.getStockLsitOrderByQteAsc();
+	}
+	
+	@GetMapping("/stock-libelle-desc")
+	@ApiOperation(value = "trie par liebelle desc")
+	@ResponseBody
+	public List<Stock> getStockOrderByLibelleDisc() { 
+		return stockService.getStockLsitOrderByLibelleDesc();
+	}
+	
+	@GetMapping("/stock-libelle-asc")
+	@ApiOperation(value = "trie par liebelle asc")
+	@ResponseBody
+	public List<Stock> getStockOrderByLibelleAsc() { 
+		return stockService.getStockLsitOrderByLibelleAsc();
+	}
+	
+	@PutMapping("/assign-productlist-to-stock/{stock-id}")
+	@ApiOperation(value = "ajouter une liste des produit pour un stock")
+	@ResponseBody
+	public void assignproductListTOStock(@RequestBody List <Long> idList,@PathVariable("stock-id") Long stockId) { 
+		 stockService.assignListproductToStock(idList, stockId);
+	}
+//	@RequestBody List<Long> listId
+
 }

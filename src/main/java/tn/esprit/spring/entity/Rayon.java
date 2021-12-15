@@ -45,6 +45,9 @@ public class Rayon implements Serializable {
 
 	String libelle;
 	
+
+	int qte;
+
 	
 	@Temporal(TemporalType.DATE)
 	Date createdAt;

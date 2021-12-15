@@ -1,36 +1,39 @@
 package tn.esprit.spring.controller;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import tn.esprit.spring.entity.Produit;
+
 import tn.esprit.spring.service.DetailFactureService;
 
 @RestController
 @Api(tags = "detail invoice management")
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
 		RequestMethod.PUT })
+
 @RequestMapping("/detail-invoce")
 public class DetailFactureRestController {
 	
 	@Autowired
 	DetailFactureService detailFactureService;
 	
+
 	@GetMapping("/get-revenue-brute/{id-produit}/{start-date}/{end-date}")
 	@ApiOperation("get revenue brute")
 	@ResponseBody
@@ -53,8 +56,5 @@ public class DetailFactureRestController {
 		return detailFactureService.getQuantiteProduitVendu(idProduit,startDate,endDate);
 		
 	}
-	
 
-	
-	
 }
