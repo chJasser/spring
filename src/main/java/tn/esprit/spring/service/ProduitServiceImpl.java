@@ -243,8 +243,7 @@ public class ProduitServiceImpl implements ProduitService {
 		for(Produit p:lp) {
 	LID.add(p.getIdProduit());
 		}		
-	return LID;
-		
+	return LID;		
 	}
 	
 	

@@ -41,5 +41,8 @@ public interface INote {
 	double CalculAverageNoteForProduit(Long idproduit);
 	
 	List<Note> getNoteBynoote(float note);
+
+
+	//List<Note> getNoteByProduitClient(Long idproduit, String username);
 	
 }

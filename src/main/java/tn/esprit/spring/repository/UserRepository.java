@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 	//Statistique interactions
-	@Query(value="SELECT COUNT(f.Note),f.client.categorieClient FROM Note f GROUP BY f.client.categorieClient")
+	@Query(value="SELECT COUNT(f.noote),f.client.categorieClient FROM Note f GROUP BY f.client.categorieClient")
 	List <Object[]> getNotesByCategorieClient();
 
 
