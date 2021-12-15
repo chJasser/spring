@@ -3,6 +3,7 @@ package tn.esprit.spring.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entity.Produit;
+
 import tn.esprit.spring.entity.SearchProduit;
+
 import tn.esprit.spring.enume.CategorieProduit;
 import tn.esprit.spring.service.ProduitService;
 
@@ -52,12 +55,17 @@ public class ProduitRestController {
 	public List<Produit> listProduits() {
 		return produitService.retrieveAllProduits();
 	}
+
 	
+	
+
+
 	@PutMapping("/modify-produit/{produit-id}")
 	@ApiOperation(value = "Modifier la liste des produit")
 	@ResponseBody
-	public Produit UpdateProduit(@RequestBody Produit p,@PathVariable("produit-id") Long produitId) {
-		return produitService.updateProduit(p,produitId);
+	public Produit UpdateProduit(@RequestBody Produit p, @PathVariable("produit-id") Long produitId) {
+		return produitService.updateProduit(p, produitId);
+
 	}
 
 	// http://localhost:8089/SpringMVC/produit/retrieve-produit/1
@@ -75,6 +83,7 @@ public class ProduitRestController {
 			@PathVariable("stock-id") Long stockId) {
 		return produitService.assignProduitToStock(produitId, stockId);
 	}
+
 	
 	@PutMapping("/assignProduitToRayon/{produit-id}/{rayon-id}")
 	@ApiOperation(value = "assign Produit To Stock")
@@ -91,6 +100,7 @@ public class ProduitRestController {
 		return produitService.AssignImageToproduct(ImageId,produitId);
 	}
 
+
 	@ApiOperation("assing provider to product")
 	@PutMapping("/assing-provider-to-product/{provider-id}/{product-id}")
 	public void assignProviderToProduct(@PathVariable("provider-id") Long providerId,
@@ -98,12 +108,13 @@ public class ProduitRestController {
 		this.produitService.assignFournisseurToProduit(providerId, productId);
 	}
 
-	
+
 	@DeleteMapping("/remove-produit/{produit-id}")
 	@ResponseBody
 	public void removeProduit(@PathVariable("produit-id") Long produitId) {
 		produitService.deleteProduit(produitId);
 	}
+
 	
 	
 	
@@ -121,6 +132,9 @@ public class ProduitRestController {
 		
 		return produitService.getProduitBycategory(category);
 	}
+	
+	
+
 	
 	@GetMapping("/retrieve-all-produits2/{prix}")
 	@ResponseBody
@@ -176,6 +190,28 @@ public class ProduitRestController {
 		
 	}
 	
+	@GetMapping("/retrieve-notstock-produits/{stock-id}")
+	@ApiOperation(value = "Récupérer la liste des produit qui n'existe pas dans un stock ")
+	@ResponseBody
+	public List<Produit> retriveProductListNotAvInStock(@PathVariable("stock-id") Long stockId) {
+		return produitService.getProductListNotAvInStock(stockId);
+	}
 	
+	@GetMapping("/retrieve-notrayon-produits/{stock-id}")
+	@ApiOperation(value = "Récupérer la liste des produit qui n'existe pas dans un stock ")
+	@ResponseBody
+	public List<Produit> retriveProductListNotAvInRayon(@PathVariable("stock-id") Long stockId) {
+		return produitService.getProductListNotAvInRayon(stockId);
+	}
 	
+	//stat jasser
+	
+	@GetMapping("/retrieve-nb-produit/{stock-id}/{cat}")
+	@ApiOperation(value = "Récupérer le nombre des produit par stock et categorie")
+	@ResponseBody
+	public int getNbProductByStockAndCat(@PathVariable("stock-id") Long stockId,@PathVariable("cat") String cat) {
+		return produitService.getNbProductByStockAndCat(stockId,cat);
+	}
+
+
 }

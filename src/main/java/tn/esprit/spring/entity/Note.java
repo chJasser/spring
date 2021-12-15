@@ -35,11 +35,16 @@ public class Note {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idNote;
+
 	private float noote;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date dateNote;
 	private String coommentaire;
+
+	
+
+
 	
 	@JsonIgnore
 	@ManyToOne

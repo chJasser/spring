@@ -28,8 +28,14 @@ public interface FactureRepository extends CrudRepository<Facture, Long> {
 	float getChiffreAffaireParCategorieClient(@Param("cat") CategorieClient categorie ,@Param("start_date") Date startDate ,@Param("end_date") Date endDate);
 
 
+
 	//IHEB WAS HERE
 	List<Facture> getFactureByClientOrderByDateFactureDesc(User user);
+
+
+
+	//IHEB WAS HERE
+//	List<Facture> getFactureByClientOrderByDateFactureDesc(User user);
 
 
 }

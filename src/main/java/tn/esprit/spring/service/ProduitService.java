@@ -1,14 +1,13 @@
 package tn.esprit.spring.service;
 
 import java.text.ParseException;
-import java.util.Date;
+
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
-
 import tn.esprit.spring.entity.Produit;
+
 import tn.esprit.spring.entity.SearchProduit;
-import tn.esprit.spring.entity.Stock;
+
 import tn.esprit.spring.enume.CategorieProduit;
 
 public interface ProduitService {
@@ -20,32 +19,42 @@ public interface ProduitService {
 
 	Produit assignProduitToStock(Long idProduit, Long idStock);
 
-	Produit updateProduit(Produit p,Long idProduit);
+	Produit updateProduit(Produit p, Long idProduit);
 
 	void assignFournisseurToProduit(Long fournisseurId, Long produitId);
 
 	float getPrixUnitaitreById(Long id);
-	public Produit AssignImageToproduct(Long idImage,Long idProduit);
+
+	public Produit AssignImageToproduct(Long idImage, Long idProduit);
+
 	void deleteProduit(Long id);
 
-List<Produit> getProduitByLibelle(String libelle);
-List<Produit> getProduitBycategory(CategorieProduit category);
-List<Produit> getProduitByprixbetween(float prixUnitaire1,float prixUnitaire2);
+	List<Produit> getProduitByLibelle(String libelle);
 
-List<Produit> getProduitByprixbetween(float prixUnitaire1);
+	List<Produit> getProduitBycategory(CategorieProduit category);
 
-Produit getMax();
-Produit getMin();
+	List<Produit> getProduitByprixbetween(float prixUnitaire1, float prixUnitaire2);
 
-List<Produit> getProduitByFiltre(CategorieProduit category, float prix, String libelle);
+	List<Produit> getProduitByprixbetween(float prixUnitaire1);
 
-Produit assignProduitToRayon(Long idProduit, Long idRayon);
+	Produit getMax();
 
-Produit getProduitPlusVendu(String startDate, String endDate) throws ParseException;
+	Produit getMin();
 
-List<Long> GetIdProduit();
+	List<Produit> getProduitByFiltre(CategorieProduit category, float prix, String libelle);
 
-List<Produit> rechercheProduitAvance(SearchProduit obj);
+	Produit assignProduitToRayon(Long idProduit, Long idRayon);
 
+	Produit getProduitPlusVendu(String startDate, String endDate) throws ParseException;
+
+	List<Long> GetIdProduit();
+
+	List<Produit> rechercheProduitAvance(SearchProduit obj);
+
+	List<Produit> getProductListNotAvInRayon(Long stockId);
+
+	int getNbProductByStockAndCat(Long idStock, String cat);
+
+	List<Produit> getProductListNotAvInStock(Long stockId);
 
 }

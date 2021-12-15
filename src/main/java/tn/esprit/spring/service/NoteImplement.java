@@ -1,6 +1,7 @@
 package tn.esprit.spring.service;
 
 import java.util.Date;
+
 import java.util.List;
 
 
@@ -27,6 +28,7 @@ public class NoteImplement implements INote{
 	@Autowired
 	UserRepository cr;
 
+
 	@Override
 	public List<Note> retrieveAllNote() {
 		// TODO Auto-generated method stub
@@ -35,6 +37,7 @@ public class NoteImplement implements INote{
 
 	
 	@Override
+
 	public Note updateNote(float note,String commentaire,Long idProduit,Long idClient) {
 		// TODO Auto-generated method stub
 		Note n;
@@ -56,6 +59,39 @@ public class NoteImplement implements INote{
 		//System.out.print(n.getNote());
 	
 		nr.ajouterNote(note,commentaire,date,idproduit,idClient);
+	}
+
+	public Note updateNote(Note n) {
+		// TODO Auto-generated method stub
+		return nr.save(n);
+	}
+	
+	@Override
+	public Long AlreadyExists(Note n) {
+		
+		List<Note> Notes=retrieveAllNote();
+		// TODO Auto-generated method stub
+		
+		for(Note n1:Notes) {
+			
+			if(n1.getClient().equals(n.getClient()) && n1.getProduit().equals(n.getProduit())) {
+				return n1.getIdNote();
+			}
+		}
+		
+		
+		return (long) 0;
+		
+	}
+	
+	
+	@Override
+	public void addNote(Note n, Long idproduit, Long idClient) {
+		// TODO Auto-generated method stub
+	//	Long k=AlreadyExists(n);
+		//if(k==0) {
+//		 nr.ajouterNote(n.getNote(),n.getCommentaire(),n.getDateNote(),idproduit,idClient);
+
 
 //		}
 		
@@ -67,8 +103,20 @@ public class NoteImplement implements INote{
 	}
 
 
+//	@Override
+//	public List<Note>getNoteByProduitClient(Long idproduit, Long idClient) {
+//		// TODO Auto-generated method stub
+//		return nr.getNoteByProduitClient(idproduit,idClient);
+//	}
+	@Override
+	public List<Note> getNoteByProduitClient(Long idproduit, Long idClient) {
+		// TODO Auto-generated method stub
+		System.out.print(nr.getNoteByProduitClient(idproduit, idClient));
+		return nr.getNoteByProduitClient(idproduit, idClient);
+	}
 
 	@Override
+
 	public List<Note> getNoteByClient1(Long idClient) {
 		// TODO Auto-generated method stub
 		return  nr.getNoteByclient(idClient);
@@ -81,27 +129,13 @@ public class NoteImplement implements INote{
 	}
 
 
-	@Override
-	public void addNote(Note n, Long idproduit, Long idClient) {
-		// TODO Auto-generated method stub
-		
-	}
 
-
-	@Override
-	public List<Note> getNoteByProduitClient(Long idproduit, Long idClient) {
-		// TODO Auto-generated method stub
-		System.out.print(nr.getNoteByProduitClient(idproduit, idClient));
-		return nr.getNoteByProduitClient(idproduit, idClient);
-	}
-
-
-	@Override
-	public Long AlreadyExists(Note n) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+
+
+
+
+
 	
 	
 	@Override
@@ -130,6 +164,7 @@ public class NoteImplement implements INote{
 
 
 	
+
 	
 	
 	

@@ -3,6 +3,7 @@ package tn.esprit.spring.service;
 import java.util.List;
 
 
+
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entity.Note;
@@ -13,12 +14,12 @@ public interface INote {
 
 	List<Note> retrieveAllNote();
 
+	Note updateNote(Note n);
 
-//	Note updateNote(Note n);
-	
 	Long AlreadyExists(Note n);
 
 	Note retrieveNote(Long idNote);
+
 	//List<Note> getNoteByProduitClient(Long idproduit,Long idClient);
 
 	
@@ -41,5 +42,7 @@ public interface INote {
 	double CalculAverageNoteForProduit(Long idproduit);
 	
 	List<Note> getNoteBynoote(float note);
+
+	
 	
 }
