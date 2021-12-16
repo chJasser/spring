@@ -14,13 +14,15 @@ import tn.esprit.spring.repository.FournisseurRepository;
 
 @Service
 public class FournisseurserviceImpl implements FournisseurService {
-	@Autowired 
-    EntrepotRepository entrepotrepository ;   
+
+	@Autowired
+	EntrepotRepository entrepotrepository;
 
 	@Autowired
 	FournisseurRepository fournisseurRepo;
 	@Autowired
 	FournisseurRepository fournisseurrepository;
+
 	@Transactional
 	public Fournisseur addFournisseur(Fournisseur fournisseur) {
 		// TODO Auto-generated method stub
@@ -38,40 +40,31 @@ public class FournisseurserviceImpl implements FournisseurService {
 		// TODO Auto-generated method stub
 		return this.fournisseurRepo.findById(id).orElse(null);
 	}
-@Override
-public List<Fournisseur> retrieveAllFournisseurs() {
-	// TODO Auto-generated method stub
-	return (List<Fournisseur>) fournisseurrepository.findAll();
-}
 
+	@Override
+	public List<Fournisseur> retrieveAllFournisseurs() {
+		// TODO Auto-generated method stub
+		return (List<Fournisseur>) fournisseurrepository.findAll();
+	}
 
+	@Override
+	public void deleteFournisseur(Long id) {
+		// TODO Auto-generated method stub
+		fournisseurrepository.deleteById(id);
+	}
 
+	@Override
+	public Fournisseur updateFournisseur(Fournisseur f) {
+		// TODO Auto-generated method stub
+		return fournisseurrepository.save(f);
 
+	}
 
-@Override
-public void deleteFournisseur(Long id) {
-	// TODO Auto-generated method stub
-	 fournisseurrepository.deleteById(id);
-}
+	@Override
+	public List<Entrepot> getEntrepotsFournisseurs(Fournisseur f) {
+		// TODO Auto-generated method stub
+		return entrepotrepository.getentrepotparfournisseur(f);
 
-@Override
-public Fournisseur updateFournisseur(Fournisseur f) {
-	// TODO Auto-generated method stub
-	return fournisseurrepository.save(f);
-
-}
-
-
-
-
-
-
-
-@Override
-public List<Entrepot> getEntrepotsFournisseurs(Fournisseur f) {
-	// TODO Auto-generated method stub
- 	return entrepotrepository.getentrepotparfournisseur(f);
-
-} 
+	}
 
 }

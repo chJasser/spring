@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.spring.entity.ImageModel;
 import tn.esprit.spring.entity.Produit;
 import tn.esprit.spring.repository.ImageRepository;
-import tn.esprit.spring.repository.ProduitRepository;
+
 import tn.esprit.spring.service.ProduitService;
 
 

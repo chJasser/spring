@@ -1,8 +1,8 @@
 package tn.esprit.spring.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +22,7 @@ import tn.esprit.spring.entity.SearchProduit;
 import tn.esprit.spring.entity.Stock;
 import tn.esprit.spring.enume.CategorieProduit;
 import tn.esprit.spring.repository.ImageRepository;
-import tn.esprit.spring.repository.NoteRepository;
+
 import tn.esprit.spring.repository.ProduitRepository;
 
 @Service
@@ -32,13 +32,13 @@ public class ProduitServiceImpl implements ProduitService {
 
 	@Autowired
 	StockService stockService;
-	
+
 	@Autowired
 	ImageRepository IR;
-	
+
 	@Autowired
 	DetailFactureService dfs;
-	
+
 	@Autowired
 	INote nr;
 
@@ -66,8 +66,11 @@ public class ProduitServiceImpl implements ProduitService {
 		p.setImage(p.getImage());
 		DetailProduit d = detailProduitService.addDetailProduit(p);
 		p.setDetailProduit(d);
-		Produit product=produitRepository.save(p);
+		Produit product = produitRepository.save(p);
 		stockService.calculStock(idStock);
+
+		rayonService.calculQte(idRayon);
+
 		return product;
 	}
 
@@ -78,15 +81,16 @@ public class ProduitServiceImpl implements ProduitService {
 	}
 
 	@Override
-	public Produit updateProduit(Produit p,Long idProduit) {
+	public Produit updateProduit(Produit p, Long idProduit) {
 		// TODO Auto-generated method stub
 		DetailProduit d = detailProduitService.addDetailProduit(p);
 		p.setDetailProduit(d);
 		p.setIdProduit(idProduit);
 		p.getDetailProduit().setDateDerniereModification(new Date());
-		double average=nr.CalculAverageNoteForProduit(idProduit);
-		System.out.print(average);	
+		double average = nr.CalculAverageNoteForProduit(idProduit);
+		System.out.print(average);
 		p.setNoteMoyenne(average);
+
 		return produitRepository.save(p);
 	}
 
@@ -95,17 +99,17 @@ public class ProduitServiceImpl implements ProduitService {
 		Stock s = stockService.retrieveStock(idStock);
 		Produit p = retrieveProduit(idProduit);
 		p.setStock(s);
-		Produit product=updateProduit(p,idProduit);
+		Produit product = updateProduit(p, idProduit);
 		stockService.calculStock(idStock);
 		return product;
 	}
-	
+
 	@Override
 	public Produit assignProduitToRayon(Long idProduit, Long idRayon) {
 		Rayon r = rayonService.retrieveRayon(idRayon);
 		Produit p = retrieveProduit(idProduit);
 		p.setRayon(r);
-		Produit product=updateProduit(p,idProduit);
+		Produit product = updateProduit(p, idProduit);
 		return product;
 	}
 
@@ -118,7 +122,8 @@ public class ProduitServiceImpl implements ProduitService {
 		Set<Fournisseur> mySet = new HashSet<Fournisseur>();
 		mySet.add(f);
 		p.setFournisseur(mySet);
-		this.updateProduit(p,produitId);
+		this.updateProduit(p, produitId);
+
 	}
 
 	@Transactional
@@ -127,17 +132,16 @@ public class ProduitServiceImpl implements ProduitService {
 		return this.produitRepository.retrievePrixUnitaitreById(id);
 	}
 
-	
 	@Override
 	public void deleteProduit(Long id) {
 		this.produitRepository.deleteById(id);
-		
+
 	}
-	
+
 	@Override
 	public List<Produit> getProduitByLibelle(String libelle) {
 		return this.produitRepository.getProduitBylibelle(libelle);
-		
+
 	}
 
 	@Override
@@ -169,97 +173,102 @@ public class ProduitServiceImpl implements ProduitService {
 		// TODO Auto-generated method stub
 		return this.produitRepository.getMin();
 	}
-	
-	
+
 	@Override
-	public List<Produit> getProduitByFiltre(CategorieProduit category,float prix,String libelle) {
+	public List<Produit> getProduitByFiltre(CategorieProduit category, float prix, String libelle) {
 		// TODO Auto-generated method stub
-		return this.produitRepository.getByFiltre(category,prix,libelle);
+		return this.produitRepository.getByFiltre(category, prix, libelle);
 	}
-	
+
 	@Override
-	public Produit AssignImageToproduct(Long idImage,Long idProduit) {
+	public Produit AssignImageToproduct(Long idImage, Long idProduit) {
 		// TODO Auto-generated method stub
 		ImageModel i = IR.findById(idImage).orElse(null);
 		Produit p = retrieveProduit(idProduit);
 		p.setImage(i);
-		//Produit product=updateProduit(p,idProduit);
-		
+		// Produit product=updateProduit(p,idProduit);
+
 		return this.produitRepository.save(p);
 	}
-	
-	
+
 	@Override
 	public Produit getProduitPlusVendu(String startDate, String endDate) throws ParseException {
-		
-		
+
 		ArrayList<Long> Quuantite = new ArrayList<Long>();
 		System.out.print(Quuantite);
 		ArrayList<Long> Produits = new ArrayList<Long>();
 		System.out.print(Produits);
-		double max=0.0;
-	Produit p ;
-	int k=0;
-		List<Produit> LP=retrieveAllProduits();
+		double max = 0.0;
+		Produit p;
+		int k = 0;
+		List<Produit> LP = retrieveAllProduits();
 		System.out.print(LP);
 		System.out.print(startDate);
 		System.out.print(endDate);
-		
-	for(Produit po:LP) {
-		Long a=dfs.getQuantiteProduitVendu(po.getIdProduit(),startDate,endDate);
-		System.out.print(a);
-		
-		Quuantite.add(a);
-		Produits.add(po.getIdProduit());
-	
-	}
-	
-	System.out.print(Quuantite);
-	System.out.print(Produits);
-	
-	
-	for(int i=0;i<Quuantite.size();i++) {
-		
-		
-	if(Quuantite.get(i)>max) {
-		max=Quuantite.get(i);
-		k=i;
-	}
-	
-	
-	}
-		
-	p=retrieveProduit(Produits.get(k));	
+
+		for (Produit po : LP) {
+			Long a = dfs.getQuantiteProduitVendu(po.getIdProduit(), startDate, endDate);
+			System.out.print(a);
+
+			Quuantite.add(a);
+			Produits.add(po.getIdProduit());
+
+		}
+
+		System.out.print(Quuantite);
+		System.out.print(Produits);
+
+		for (int i = 0; i < Quuantite.size(); i++) {
+
+			if (Quuantite.get(i) > max) {
+				max = Quuantite.get(i);
+				k = i;
+			}
+
+		}
+
+		p = retrieveProduit(Produits.get(k));
 		return p;
-		
+
 	}
-	
-	
+
 	@Override
 	public List<Long> GetIdProduit() {
+
 		
 		List<Long> LID=new ArrayList<Long>();
 		List<Produit> lp=retrieveAllProduits();
 		for(Produit p:lp) {
 	LID.add(p.getIdProduit());
 		}		
-	return LID;
-		
+		return LID;
+
 	}
-	
-	
+
 	@Override
 	public List<Produit> rechercheProduitAvance(SearchProduit obj) {
 		// TODO Auto-generated method stub
-	
-		return produitRepository.rechercheProduitAvance(obj.getQuery(),obj.getDateDebut(),obj.getDateFin(),obj.getPrixUnitaire());
+
+		return produitRepository.rechercheProduitAvance(obj.getQuery(), obj.getDateDebut(), obj.getDateFin(),
+				obj.getPrixUnitaire(),obj.getCategorie());
 	}
 
-	
-	
-	
-	
+	@Override
+	public List<Produit> getProductListNotAvInStock(Long stockId) {
+		// TODO Auto-generated method stub
+		return produitRepository.reteiveProductsNotAvInStcok(stockId);
+	}
 
-	
+	@Override
+	public List<Produit> getProductListNotAvInRayon(Long stockId) {
+		// TODO Auto-generated method stub
+		return produitRepository.reteiveProductsNotAvInRayon(stockId);
+	}
+
+	@Override
+	public int getNbProductByStockAndCat(Long idStock, String cat) {
+		// TODO Auto-generated method stub
+		return produitRepository.getNbProductByStockAndCat(idStock, cat);
+	}
 
 }

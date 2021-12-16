@@ -1,6 +1,8 @@
 package tn.esprit.spring.service;
 
+
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,11 +10,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entity.DetailFacture;
 import tn.esprit.spring.entity.Produit;
+
 import tn.esprit.spring.repository.DetailFactureRepository;
 
 @Service
@@ -26,7 +31,7 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 		// TODO Auto-generated method stub
 		return detailFactureRepository.save(detailFacture);
 	}
-	
+
 	
 	
 
@@ -81,7 +86,7 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 			System.out.println(df);
 			Revenu+=(df.getPrixTotal()*df.getQte())-((df.getMontantRemise()*df.getPourcentageRemise()/100));
 			System.out.println(Revenu);
-		System.out.println(Revenu);
+		    
 		}
 		
 		return Revenu;
@@ -89,16 +94,11 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//	@Override
+//	public float getRevenuBrutProduit(Long idProduit, Date startDate, Date endDate) {
+//		// TODO Auto-generated method stub
+//		return detailFactureRepository.getRevenuBrutProduit(idProduit, startDate, endDate);
+//	}
+
 
 }
