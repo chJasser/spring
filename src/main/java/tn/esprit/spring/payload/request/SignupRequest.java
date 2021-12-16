@@ -1,5 +1,8 @@
 package tn.esprit.spring.payload.request;
 
+import tn.esprit.spring.enume.CategorieClient;
+import tn.esprit.spring.enume.Profession;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -15,7 +18,8 @@ public class SignupRequest {
     private String email;
 
     private String dateNaissance;
-
+    private Profession profession;
+    private CategorieClient categorieClient;
     private Set<String> role;
 
     @NotBlank
@@ -41,7 +45,12 @@ public class SignupRequest {
     public String getNom() {
         return nom;
     }
-
+    public Profession getProfession() {
+        return profession;
+    }
+    public CategorieClient getcategorieClient() {
+        return categorieClient;
+    }
     public String getPrenom() {
         return prenom;
     }
@@ -52,6 +61,14 @@ public class SignupRequest {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
+    }
+
+    public void setCategorieClient(CategorieClient categorieClient) {
+        this.categorieClient = categorieClient;
     }
 
     public String getUsername() {

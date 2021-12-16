@@ -74,7 +74,17 @@ public class User implements Serializable {
 		this.password = password;
 		this.dateNaissance = dateNaissance ;
 	}
-
+	public User(String nom,String prenom,String username,String email,String password,Date dateNaissance,CategorieClient cat,
+				Profession prof){
+		this.nom = nom;
+		this.prenom =prenom ;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.dateNaissance = dateNaissance ;
+		this.categorieClient = cat;
+		this.profession = prof ;
+	}
 	@Override
 	public String toString() {
 		return "Client [idClient=" + idClient + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance="

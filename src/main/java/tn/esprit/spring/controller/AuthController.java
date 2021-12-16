@@ -94,7 +94,8 @@ public class AuthController {
         try {
             user = new User(signUpRequest.getNom(), signUpRequest.getPrenom(), signUpRequest.getUsername(),
                     signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()) ,
-                    new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getDateNaissance())
+                    new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getDateNaissance()),
+                    signUpRequest.getcategorieClient(),signUpRequest.getProfession()
                      );
         } catch (ParseException e) {
             e.printStackTrace();

@@ -104,8 +104,8 @@ public class UserRestController {
 	@ApiOperation(value = "Récupérer client par id")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@ResponseBody
-	public User retrieveUser(@PathVariable("user-id") Long clientId) {
-		return userService.retrieveUser(clientId);
+	public User retrieveUser(@PathVariable("user-id") String clientId) {
+		return userService.retrieveUser(Long.valueOf(clientId));
 	}
 
 	// THIS IS NOT A SIGNUP
